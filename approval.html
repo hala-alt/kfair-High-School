@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Approval</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .feedback-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .feedback-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: #f1f3f5;
+            border-radius: 15px;
+        }
+        .feedback-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .feedback-content {
+            flex: 1;
+        }
+        .feedback-content .user-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .feedback-content .message {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .feedback-content .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .actions button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+        }
+        .actions button.approve {
+            background-color: #28a745;
+            color: white;
+        }
+        .actions button.approve:hover {
+            background-color: #218838;
+        }
+        .actions button.reject {
+            background-color: #dc3545;
+            color: white;
+        }
+        .actions button.reject:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+ <div class="container">
+        <h1>Feedback Approval</h1>
+        <div class="feedback-list" id="feedback-list">
+            <!-- Pending feedback items will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Ensure the DOM is fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to load and display pending feedback requests
+            function loadPendingFeedback() {
+                const feedbackList = document.getElementById('feedback-list');
+                const pendingFeedback = JSON.parse(localStorage.getItem('pendingFeedback') || '[]');
+
+                if (pendingFeedback.length === 0) {
+                    feedbackList.innerHTML = '<p>No pending feedback requests found.</p>';
+                    return;
+                }
+
+                // Clear the list before adding new items
+                feedbackList.innerHTML = '';
+
+                // Loop through pending feedback and display them
+                pendingFeedback.forEach((message, index) => {
+                    const feedbackItem = document.createElement('div');
+                    feedbackItem.classList.add('feedback-item');
+                    feedbackItem.innerHTML = `
+                        <img src="${message.profilePic}" alt="Profile Picture">
+                        <div class="feedback-content">
+                            <div class="user-name">${message.user}</div>
+                            <div class="message">${message.message}</div>
+                            <div class="timestamp">${message.timestamp}</div>
+                        </div>
+                        <div class="actions">
+                            <button class="approve" data-index="${index}">Approve</button>
+                            <button class="reject" data-index="${index}">Reject</button>
+                        </div>
+                    `;
+                    feedbackList.appendChild(feedbackItem);
+                });
+
+                // Add event listeners to approve/reject buttons
+                document.querySelectorAll('.approve').forEach(button => {
+                    button.addEventListener('click', () => approveFeedback(button.dataset.index));
+                });
+
+                document.querySelectorAll('.reject').forEach(button => {
+                    button.addEventListener('click', () => rejectFeedback(button.dataset.index));
+                });
+            }
+
+            // Function to approve feedback
+            window.approveFeedback = function (index) {
+                const pendingFeedback = JSON.parse(localStorage.getItem('pendingFeedback') || '[]');
+                const approvedFeedback = JSON.parse(localStorage.getItem('approvedFeedback') || '[]');
+
+                // Move the message from pending to approved
+                const approvedMessage = pendingFeedback.splice(index, 1)[0];
+                approvedFeedback.push(approvedMessage);
+
+                // Save the updated arrays back to local storage
+                localStorage.setItem('pendingFeedback', JSON.stringify(pendingFeedback));
+                localStorage.setItem('approvedFeedback', JSON.stringify(approvedFeedback));
+
+                // Display a success alert
+                alert(`Feedback from ${approvedMessage.user} approved!`);
+
+                // Refresh the list
+                loadPendingFeedback();
+            };
+
+            // Function to reject feedback
+            window.rejectFeedback = function (index) {
+                const pendingFeedback = JSON.parse(localStorage.getItem('pendingFeedback') || '[]');
+
+                // Remove the message from pending
+                const rejectedMessage = pendingFeedback.splice(index, 1)[0];
+
+                // Save the updated array back to local storage
+                localStorage.setItem('pendingFeedback', JSON.stringify(pendingFeedback));
+
+                // Display a success alert
+                alert(`Feedback from ${rejectedMessage.user} rejected!`);
+
+                // Refresh the list
+                loadPendingFeedback();
+            };
+
+            // Load pending feedback when the page loads
+            loadPendingFeedback();
+        });
+    </script>
+</body>
+</html>

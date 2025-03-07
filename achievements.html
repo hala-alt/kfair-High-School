@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.1.3/smooth-scroll.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+    <title>AlKfeir High School</title>
+    <script>
+        var scroll = new SmoothScroll('a[href*="#"]', {
+          speed: 800,               // Speed of the scroll (in ms)
+          speedAsDuration: true,    // Scroll speed duration as a number
+          easing: 'easeInOutCubic'  // Easing function (can also use others like ease, linear)
+        });
+      </script>
+      
+    <style>
+        html{
+            overflow-x: hidden;
+        }
+        body {
+            background-color: #F5F1E3;
+            color: black;
+            font-family: 'Amiri', serif;
+            
+        }
+
+        .navbar {
+            background-color: #145630;
+        }
+
+        
+
+        .navbar-brand img {
+            height: 100px; /* Increase logo size */
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important;
+            font-size: 16px;
+            position: relative;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 0;
+            height: 2px;
+            background-color:#e67e34; /* Light green underline */
+            transition: width 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: 
+            #fff!important; /* Light green for hover effect */
+            transform: none; /* Slight zoom effect */
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%; /* Underline expands fully */
+        }
+
+        .navbar-toggler {
+            border: none; /* Remove border around the toggler */
+        }
+
+
+
+        .navbar-toggler:focus {
+            outline: none; /* Remove focus outline */
+            box-shadow: none; /* Remove focus box-shadow */
+        }
+
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 100px;
+            padding-top: 100px;
+        }
+        .frame {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            background-color: #e0d6c6;
+            border: 10px solid #c4b8a6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+        }
+        .frame img {
+            width: 80%;
+            height: auto;
+            position: absolute;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .frame img:hover{
+            transform: scale(1); /* Enlarges the image */
+            filter: brightness(1.2)  drop-shadow(0 0 15px rgba(250, 250, 250, 0.8)); /* Glow effect with filter */
+        }
+        .frame.right {
+            transform: translateX(50px);
+        }
+        .frame.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .frames-wrapper {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 800px;
+        }
+        .description {
+            font-weight: bold;
+            position: absolute;
+            bottom: 10px;
+            background: #c4b8a6b0;
+            color: #145630;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            width: 90%;
+            text-align: center;
+        }
+        .frame:hover .description {
+            opacity: 1;
+        }
+
+        .achievements-intro {
+    text-align: center;
+    font-size: 1.7em;
+    color: #145630;
+    font-family: 'Amiri', serif;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    width: 80%;
+}
+
+.achievements-intro p {
+    font-weight:bolder;
+    margin: 0;
+    line-height: 1.6;
+    overflow: hidden;
+}
+
+
+.music-toggle-button {
+    z-index: 1000;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    border: 2px solid #45a049;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, transform 0.2s;
+
+}
+
+.music-toggle-button:hover {
+    background-color: #45a049;
+    transform: scale(1.1);
+}
+
+.music-toggle-button:active {
+    transform: scale(0.95);
+}
+
+.icon {
+    font-size: 24px;
+    color: white;
+    overflow: hidden;
+}
+
+    </style>
+</head>
+<body style="overflow-x: hidden;">
+
+      <!--Nav Bar-->
+
+      <nav class="navbar navbar-expand-lg" style="font-family: 'Montserrat', sans-serif;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="school logo.png" alt="School Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="achievements.html">Achievements</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="d-none d-lg-inline-block" style="color: #e67e34; padding: 0 8px;">/</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="memories.html">Memories</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="d-none d-lg-inline-block" style="color: #e67e34; padding: 0 8px;">/</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="forStudents.html">For Students</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="d-none d-lg-inline-block" style="color: #e67e34; padding: 0 8px;">/</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="topgrades.html">Top Grades</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="d-none d-lg-inline-block" style="color: #e67e34; padding: 0 8px;">/</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="library.html">Library</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="d-none d-lg-inline-block" style="color: #e67e34; padding: 0 8px;">/</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chatbot.html">FAQs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <button id="musicButton" class="music-toggle-button">
+        <span class="icon">🎵</span>
+    </button>
+
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="Dark Royalty Core Classical Music(M4A_128K).m4a" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <div class="achievements-intro">
+        <p>انجازاتنا، رحلة تحديات نجتازها بفضل ثقتنا بقدراتنا ودعم المؤمنين برسالتنا التربوية</p>
+    </div>
+
+    <div class="container">
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy1.png" alt="Trophy 1">
+                <div class="description">البطولة الرياضية المدرسية 2013<br> المركز الثاني قضاء حاصبيا</div>
+            </div>
+            <div class="frame right">
+                <img src="trophy2.png" alt="Trophy 2">
+                <div class="description">المركز الاول<br>  محافظة النبطية - كرة الصالات <br> 2013 / 2014</div>
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy3.png" alt="Trophy 3">
+                <div class="description">مركز ثاني <br> تقدمة جمعية الشبان والمنطقلة التربوية في محافظة النبطية 2012 - 2011 </div>
+            </div>
+            <div class="frame right">
+                <img src="trophy11.png" alt="Trophy 3">
+                <div class="description">Mini - Tournament <br> CCPA 2012 </div>
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy5.png" alt="Trophy 1">
+                <div class="description">البطولة الرياضية المدرسية 2013 <br> بطل حاصبيا<br>  اناث 95-96</div>
+            </div>
+            <div class="frame right">
+                <img src="trophy6.png" alt="Trophy 2">
+                <div class="description">وزارة التربية والتعليم العالي <br>  وحدة الانشطة الرياضية و الكشفية<br> المديرية العامة للتربية<br> 2016 - 1017</div>
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy7.png" alt="Trophy 3">
+                <div class="description">البطولة الرياضية المدرسية 2013<br>  المركز الثاني قضاء حاصبيا اناث </div>
+            </div>
+            <div class="frame right">
+                <img src="trophy8.png" alt="Trophy 4">
+                <div class="description">البطولة الرياضية المدرسية 2013<br> بطل اقضية حاصبيا - مرجعيون - بنت جبيل </div>
+            </div>
+        </div>
+         <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy9.png" alt="Trophy 1">
+                <div class="description">وزارة التربية والتعليم العالي <br>  وحدة الانشطة الرياضية و الكشفية<br> المسابقة المدرسية للرقص الرياضي المتنوع <br> 2016 - 1017 <br> المركز الاول</div>
+            </div>
+            <div class="frame right">
+                <img src="trophy10.png" alt="Trophy 2">
+                <div class="description">  لكرة القدم ccpa team بطولة </div>
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy4.png" alt="Trophy 3">
+                <div class="description">البطولة الرياضية المدرسية <br> تقدمة مدرسة عين جرفا الرسمية <br> 2013 - 2014</div>
+                
+            </div>
+            <div class="frame right">
+                <img src="trophy12.png" alt="Trophy 4">
+                <div class="description">وزارة التربية والتعليم العالي <br>  وحدة الانشطة الرياضية و الكشفية<br> المديرية العامة للتربية<br> المركز الثاني </div>
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy13.png" alt="Trophy 1">
+               
+            </div>
+            <div class="frame right">
+                <img src="trophy15.png" alt="Trophy 2">
+                
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy14.png" alt="Trophy 3">
+               
+            </div>
+            <div class="frame right">
+                <img src="trophy16.png" alt="Trophy 4">
+               
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy17.png" alt="Trophy 1">
+              
+            </div>
+            <div class="frame right">
+                <img src="trophy18.png" alt="Trophy 2">
+              
+            </div>
+        </div>
+        <div class="frames-wrapper">
+            <div class="frame left">
+                <img src="trophy19.png" alt="Trophy 3">
+                
+            </div>
+            <div class="frame right">
+                <img src="trophy20.png" alt="Trophy 4">
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        function checkFrames() {
+            const frames = document.querySelectorAll(".frame");
+            frames.forEach(frame => {
+                const position = frame.getBoundingClientRect().top;
+                if (position < window.innerHeight * 0.75) {
+                    frame.classList.add("visible");
+                } else {
+                    frame.classList.remove("visible");
+                }
+            });
+        }
+        document.addEventListener("scroll", checkFrames);
+        window.addEventListener("load", checkFrames);
+        const musicButton = document.getElementById('musicButton');
+const backgroundMusic = document.getElementById('backgroundMusic');
+
+let isPlaying = true; // Assume music is playing initially
+
+// Ensure the button reflects the correct state on page load
+musicButton.innerHTML = '<span class="icon">🎶</span>';
+
+// Toggle music on button click
+musicButton.addEventListener('click', () => {
+    if (isPlaying) {
+        backgroundMusic.pause();
+        musicButton.innerHTML = '<span class="icon">🎵</span>';
+    } else {
+        backgroundMusic.play();
+        musicButton.innerHTML = '<span class="icon">🎶</span>';
+    }
+    isPlaying = !isPlaying;
+});
+    </script>
+    <br><br><br>
+    <style>
+        /* General Reset */
+        .hs-footer-reset {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          width:100%
+        }
+    
+        /* Footer Container */
+        .hs-footer-container {
+          background-color: #145630;
+          color: white;
+          padding: 40px 20px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: flex-start;
+          font-family: Arial, sans-serif;
+        }
+    
+        /* Footer Sections */
+        .hs-footer-section {
+          flex: 1;
+          min-width: 200px;
+          margin: 10px 20px;
+        }
+    
+        .hs-footer-section h3 {
+          color: #000;
+          margin-bottom: 15px;
+          font-size: 18px;
+        }
+    
+        .hs-footer-section ul {
+          list-style: none;
+          padding: 0;
+        }
+    
+        .hs-footer-section ul li {
+          margin-bottom: 10px;
+        }
+    
+        .hs-footer-section ul li a {
+          color: white;
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+    
+        .hs-footer-section ul li a:hover {
+          color: #000;
+        }
+    
+        /* School Logo */
+        .hs-footer-logo {
+          max-width: 150px;
+          margin-bottom: 15px;
+        }
+    
+        /* Social Icons - Vertical Layout */
+        .hs-footer-social-icons {
+          display: flex;
+          flex-direction: column;
+          gap: 15px; /* Space between icons */
+        }
+    
+        .hs-footer-social-icons a {
+          display: inline-block;
+          color: white;
+          font-size: 28px; /* Enlarged icons */
+    
+          transition: all 0.3s ease;
+        }
+    
+        /* Creative Hover Animation */
+        .hs-footer-social-icons a:hover {
+          color: #000; /* Change color on hover */
+          opacity: 0.9;
+        }
+    
+        /* Copyright */
+        .hs-footer-copyright {
+          text-align: center;
+          width: 100%;
+          margin-top: 20px;
+          font-size: 14px;
+          color: #000;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .hs-footer-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+    
+          .hs-footer-section {
+            margin: 10px 0;
+          }
+        }
+      </style>
+    
+    <div class="hs-footer-reset">
+    
+        <!-- Footer -->
+        <footer class="hs-footer-container">
+          <!-- School Logo and Name -->
+          <div class="hs-footer-section">
+            <img src="school logo.png" alt="High School Logo" class="hs-footer-logo">
+            <h3 class="hs-footer-school-name">AlKfeir High School</h3>
+          </div>
+      
+          <!-- Quick Links -->
+          <div class="hs-footer-section">
+            <h3 class="hs-footer-quick-links-title">Quick Links</h3>
+            <ul class="hs-footer-quick-links">
+              <li><a href="index.html" class="hs-footer-link">Home</a></li>
+              <li><a href="topgrades.html" class="hs-footer-link">Top Grades</a></li>
+              <li><a href="achievements.html" class="hs-footer-link">Achievements</a></li>
+              <li><a href="library.html" class="hs-footer-link">Library</a></li>
+              <li><a href="chatbot.html" class="hs-footer-link">FAQs</a></li>
+            </ul>
+          </div>
+      
+          <!-- Social Media Links -->
+          <div class="hs-footer-section">
+            <h3 class="hs-footer-social-title">Contact</h3>
+            <div class="hs-footer-social-icons">
+              <a href="mailto:alkfierss@gmail.com" aria-label="Email" class="hs-footer-social-link">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="https://wa.me/03759089" aria-label="WhatsApp" class="hs-footer-social-link">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=100068916519551&mibextid=ZbWKwL" aria-label="Facebook" class="hs-footer-social-link">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+            </div>
+          </div>
+      
+          <!-- Copyright -->
+          <div class="hs-footer-copyright">
+            &copy; 2025 developed by Hala Abou Saad. All rights reserved.
+          </div>
+        </footer>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

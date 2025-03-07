@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <title>AlKfeir High School</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+    <style>
+        :root {
+            --bg-color: #F5F1E3;
+            --text-color: #145630;
+            --card-bg: #fff;
+            --btn-bg: #e67e34;
+            --btn-hover: #fdb887;
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #fff;
+            --card-bg: #1e1e1e;
+            --btn-bg: #e67e34;
+            --btn-hover: #fdb887;
+        }
+
+        body {
+            font-family: 'montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #e5e7eb;
+  color: #374151;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #d1d5db;
+}
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        textarea {
+            font-family: 'montserrat', sans-serif;
+            width: 100%;
+            height: 150px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--btn-bg);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--btn-hover);
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .loading {
+            font-style: italic;
+            color: #888;
+        }
+
+        .toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <a href="forStudents.html" class="back-button">&larr; Back</a>
+    <div class="toggle-mode">
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </div>
+    <div class="container">
+        <h1>Text Summarizer</h1>
+        <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+        <p>Words: <span id="wordCount">0</span> | Characters: <span id="charCount">0</span></p>
+        <button id="summarizeBtn">Summarize</button>
+        <button id="copyBtn">Copy</button>
+        <button id="downloadBtn">Download</button>
+        <div class="result">
+            <h2>Summary:</h2>
+            <p id="summaryText" class="loading"></p>
+        </div>
+    </div>
+    <script>
+        const API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn";
+        const API_TOKEN = "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";
+
+        async function summarizeText(text) {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    inputs: text,
+                    parameters: { max_length: 130, min_length: 30 }
+                })
+            });
+            if (!response.ok) throw new Error("Failed to summarize text.");
+            const data = await response.json();
+            return data[0].summary_text;
+        }
+
+        document.getElementById("summarizeBtn").addEventListener("click", async () => {
+            const inputText = document.getElementById("inputText").value.trim();
+            const summaryText = document.getElementById("summaryText");
+            if (!inputText) return alert("Please enter text to summarize.");
+            summaryText.textContent = "Summarizing...";
+            try {
+                summaryText.textContent = await summarizeText(inputText);
+            } catch (error) {
+                summaryText.textContent = "Error: Unable to summarize the text.";
+            }
+        });
+
+        document.getElementById("copyBtn").addEventListener("click", () => {
+            navigator.clipboard.writeText(document.getElementById("summaryText").textContent);
+            alert("Summary copied to clipboard!");
+        });
+
+        document.getElementById("downloadBtn").addEventListener("click", () => {
+            const summary = document.getElementById("summaryText").textContent;
+            const blob = new Blob([summary], { type: "text/plain" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "summary.txt";
+            a.click();
+        });
+
+        document.getElementById("inputText").addEventListener("input", () => {
+            const text = document.getElementById("inputText").value;
+            document.getElementById("wordCount").textContent = text.split(/\s+/).filter(word => word).length;
+            document.getElementById("charCount").textContent = text.length;
+        });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
+</body>
+</html>

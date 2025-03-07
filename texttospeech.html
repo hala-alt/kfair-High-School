@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>AlKfeir High School</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+</head>
+
+<body class="booty">
+
+    <a href="forStudents.html" class="back-button" style="text-decoration: none;">&larr; Back</a>
+
+  <div class="container text-center">
+    <img class="speech" src="https://i.imgur.com/qKLVxuz.png" alt="">
+    <div class="form-group">
+      <label for="file-input">Upload a text file:</label>
+      <input type="file" id="file-input" class="form-control" accept=".txt">
+    </div>
+    <div class="form-group">
+      <pre id="file-content" class="file-content"></pre>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <form class="booty">
+          <div class="form-group">
+            <textarea name="" id="text-input" class="form-control form-control-lg" placeholder="Type anything..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="pitch">Pitch</label>
+            <div id="pitch-value" class="badge badge-primary float-right">1</div>
+            <input type="range" id="pitch" class="custom-range" min="0.5" max="2" value="1" step="0.1">
+          </div>
+
+          <div class="form-group">
+            <label for="rate">Rate</label>
+            <div id="rate-value" class="badge badge-primary float-right">1</div>
+            <input type="range" id="rate" class="custom-range" min="0.5" max="2" value="1" step="0.1">
+          </div>
+          <div class="form-group">
+            <select id="voice-select" class="form-control form-control-lg"></select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-light btn-lg btn-block" id="speak-btn">Speak It</button>
+            <button class="btn btn-success btn-lg btn-block" id="download-btn" style="display: none;">Download Audio</button>
+          </div>
+          
+        </form>
+
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <style>
+    /* Existing styles */
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+    }
+    .back-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #e5e7eb;
+  color: #374151;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #d1d5db;
+}
+
+
+
+    .file-content {
+      white-space: pre-wrap;
+      background-color: #1e1e1e;
+      padding: 1rem;
+      border: 1px solid #e67e34;
+      border-radius: 5px;
+      color: #e0e0e0;
+    }
+
+    a {
+      color: #e67e34;
+      text-decoration: none;
+    }
+
+    .container {
+      padding: 2rem;
+    }
+
+    .speech {
+      width: 150px;
+      height: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    textarea.form-control {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #e67e34;
+    }
+
+    textarea.form-control:focus {
+      box-shadow: 0 0 8px #e67e34;
+      border-color: #e67e34;
+    }
+
+    .custom-range {
+      accent-color: #e67e34;
+    }
+
+    .badge-primary {
+      background-color: #e67e34;
+      color: #121212;
+    }
+
+    .btn-light {
+      background-color: #e67e34;
+      color: #121212;
+      border: none;
+    }
+
+    .btn-light:hover {
+      background-color: #e67e34;
+      color: #121212;
+    }
+
+    label {
+      color: #e0e0e0;
+    }
+
+    select.form-control {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #e67e34;
+    }
+
+    select.form-control:focus {
+      box-shadow: 0 0 8px #e67e34;
+      border-color: #e67e34;
+    }
+    /* Add to your existing styles */
+#voice-select {
+  width: 100%; /* Ensure it fits within the screen width */
+  font-size: 16px; /* Adjust font size for better readability */
+  padding: 8px; /* Add padding for ease of use */
+  border: 1px solid #ccc; /* Border for better aesthetics */
+  border-radius: 4px; /* Rounded corners for a modern look */
+  overflow-y: auto; /* Enable scrolling for large lists */
+  max-height: 200px; /* Limit the height of the dropdown */
+}
+
+@media (max-width: 600px) {
+  /* Adjustments for smaller screens */
+  #voice-select {
+    max-width: 100%; /* Ensure it takes full width on smaller screens */
+    font-size: 14px; /* Smaller font size for better mobile experience */
+  }
+}
+
+  </style>
+<script>
+  // File Input Handling
+  const fileInput = document.getElementById('file-input');
+  const fileContent = document.getElementById('file-content');
+  const textInput = document.querySelector('#text-input');
+  const speakBtn = document.querySelector('#speak-btn');
+  const rate = document.querySelector('#rate');
+  const rateValue = document.querySelector('#rate-value');
+  const pitch = document.querySelector('#pitch');
+  const pitchValue = document.querySelector('#pitch-value');
+  const voiceSelect = document.querySelector('#voice-select');
+  const downloadBtn = document.querySelector('#download-btn');
+  let voices = [];
+
+  // File input handling to display text
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === 'text/plain') {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        fileContent.textContent = event.target.result;
+        textInput.value = event.target.result; // Preload into the text area
+      };
+      reader.readAsText(file);
+    } else {
+      fileContent.textContent = 'Please upload a valid .txt file.';
+    }
+  });
+
+// Initialize SpeechSynthesis API and load voices
+const synth = window.speechSynthesis;
+const getVoices = () => {
+  voices = synth.getVoices();
+
+  // Filter out Microsoft voices (if necessary)
+  const filteredVoices = voices.filter(voice => !voice.name.toLowerCase().includes("microsoft"));
+  voiceSelect.innerHTML = ''; // Clear previous options
+
+  filteredVoices.forEach(voice => {
+    const option = document.createElement('option');
+    option.textContent = `${voice.name} (${voice.lang})`; // Proper use of template literals
+    option.setAttribute('data-lang', voice.lang);
+    option.setAttribute('data-name', voice.name);
+    voiceSelect.appendChild(option);
+  });
+};
+
+  // Wait for voices to load
+  getVoices();
+  if (synth.onvoiceschanged !== undefined) {
+    synth.onvoiceschanged = getVoices;
+  }
+
+  const speak = () => {
+  if (synth.speaking) {
+    console.error('Already speaking...');
+    return;  // Prevents speaking if already in progress
+  }
+
+  const text = textInput.value;
+  if (text !== '') {
+    const speakText = new SpeechSynthesisUtterance();
+    speakText.onend = () => {
+      console.log('Done speaking...');
+      if (currentChunk < text.length) {
+        readInChunks(); // Continue reading remaining text when the current chunk finishes
+      }
+    };
+    speakText.onerror = () => {
+      console.log('Something went wrong');
+    };
+
+    const selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    voices.forEach(voice => {
+      if (voice.name === selectedVoice) {
+        speakText.voice = voice;  // Assign the selected voice
+      }
+    });
+
+    speakText.rate = rate.value;   // Sets the speech rate
+    speakText.pitch = pitch.value; // Sets the speech pitch
+
+    // Break the text into smaller chunks if necessary
+    const chunkSize = 200; // Number of characters per chunk
+    let currentChunk = 0;
+
+    // Function to read in chunks
+    const readInChunks = () => {
+      const chunk = text.slice(currentChunk, currentChunk + chunkSize);
+      if (chunk) {
+        speakText.text = chunk;  // Set the chunk as the text to speak
+        synth.speak(speakText);   // Start speaking this chunk
+        currentChunk += chunkSize;  // Move to the next chunk
+      }
+    };
+
+    // Read the first chunk
+    readInChunks();
+  }
+};
+
+
+  // Event listener for the Speak button
+  speakBtn.addEventListener('click', e => {
+    e.preventDefault();
+    speak();
+    textInput.blur();
+  });
+
+  // Update voice selection and other controls
+  rate.addEventListener('change', e => rateValue.textContent = rate.value);
+  pitch.addEventListener('change', e => pitchValue.textContent = pitch.value);
+  voiceSelect.addEventListener('change', e => speak());
+
+  // MediaRecorder setup for downloading audio
+  let audioChunks = [];
+  const mediaRecorder = new MediaRecorder(window.stream);
+
+  mediaRecorder.ondataavailable = event => {
+    audioChunks.push(event.data);
+  };
+
+  mediaRecorder.onstop = () => {
+    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const audio = new Audio(audioUrl);
+    const a = document.createElement('a');
+    a.href = audioUrl;
+    a.download = 'speech_audio.wav';
+    a.click();
+  };
+
+  downloadBtn.addEventListener('click', () => {
+    mediaRecorder.stop();
+  });
+
+</script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

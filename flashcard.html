@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>AlKfeir High School</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+  <style>
+    /* Flip Card Animation */
+    .flip-card {
+      perspective: 1000px;
+      width: 300px;
+      height: 200px;
+      margin: 10px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      padding: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+  </style>
+</head>
+<body class=" relative" style="background-color: #F5F1E3;">
+  <!-- Back Button at Top Left -->
+  <a href="forStudents.html" class="absolute top-4 left-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-3 py-1 rounded shadow" >
+    &larr; Back
+  </a>
+
+  <!-- Main Container -->
+  <div class="flex flex-col space-y-6 p-4 pt-16">
+    <!-- Top Row: Dashboard & Create Flashcard side by side -->
+    <div class="flex flex-wrap justify-center gap-6">
+      <!-- Dashboard Section -->
+      <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-sm">
+        <div class="flex justify-between items-center mb-6">
+          <div class="text-2xl font-bold" style="color: #145630;">Dashboard</div>
+        </div>
+        <div class="flex space-x-4 mb-6">
+          <!-- Studied Cards Section: Clickable to open the studied modal -->
+          <div onclick="toggleStudiedModal()"
+               class="rounded-lg p-4 flex-1 text-center cursor-pointer"
+               style="background-color: #e67e34; color: white;">
+            <div class="text-2xl font-bold" id="studiedCount">0</div>
+            <div class="text-sm">Studied cards</div>
+          </div>
+          <div class="rounded-lg p-4 flex-1 text-center"
+               style="background-color: #145630; color: white;">
+            <div class="text-2xl font-bold" id="deckCount">0</div>
+            <div class="text-sm">Deck created</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create / Edit Flashcard Section -->
+      <div class="rounded-2xl shadow-lg p-6 w-full max-w-sm text-white"
+           style="background:#145630;">
+        <h2 class="text-xl font-bold text-center mb-4" id="form-title">Create a Flashcard</h2>
+        <div class="bg-white p-4 rounded-lg shadow-md w-full max-w-sm text-black">
+          <input type="text" id="question" placeholder="Enter question" class="w-full p-2 mb-2 border rounded">
+          <input type="text" id="answer" placeholder="Enter answer" class="w-full p-2 mb-2 border rounded">
+          <!-- Default color is white -->
+          <input type="color" id="card-color" class="mb-2 w-full" value="#ffffff">
+          <div class="flex space-x-2">
+            <button id="submitButton" onclick="submitFlashcard()"
+                    class="w-full rounded px-4 py-2 transition-colors"
+                    style="background-color: #e67e34; color: white;">
+              Add Flashcard
+            </button>
+            <!-- Cancel button appears only in edit mode -->
+            <button id="cancelEditBtn" onclick="cancelEdit()"
+                    class="hidden w-full rounded px-4 py-2 transition-colors"
+                    style="background-color: #e67e34; color: white;">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flashcard Display: Cards are arranged side by side -->
+    <div id="flashcard-container" class="flex flex-wrap justify-center gap-4 p-4"></div>
+  </div>
+
+  <!-- Studied Cards Modal (hidden by default) -->
+  <div id="studied-modal" class="modal hidden">
+    <div class="bg-white p-6 rounded-lg w-full max-w-lg max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold" style="color: #145630;">Studied Cards</h2>
+        <button onclick="toggleStudiedModal()" class="text-gray-700 text-lg">&times;</button>
+      </div>
+      <div id="studied-cards-container" class="flex flex-wrap gap-4">
+        <!-- Studied cards will appear here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global variable to store flashcards.
+    // Each card is an object: { id, question, answer, color, location } where location is "main" or "studied".
+    let flashcards = [];
+    let editingCardId = null;
+
+    // Save flashcards array to localStorage
+    function saveToLocalStorage() {
+      localStorage.setItem("flashcards", JSON.stringify(flashcards));
+    }
+
+    // Load flashcards from localStorage
+    function loadFromLocalStorage() {
+      const data = localStorage.getItem("flashcards");
+      if (data) {
+        flashcards = JSON.parse(data);
+      }
+    }
+
+    // Render flashcards into the two containers (main deck and studied)
+    function renderFlashcards() {
+      const mainContainer = document.getElementById("flashcard-container");
+      const studiedContainer = document.getElementById("studied-cards-container");
+      mainContainer.innerHTML = "";
+      studiedContainer.innerHTML = "";
+      
+      flashcards.forEach(card => {
+        const cardElement = createCardElement(card);
+        if (card.location === "main") {
+          mainContainer.appendChild(cardElement);
+        } else {
+          studiedContainer.appendChild(cardElement);
+        }
+      });
+      
+      updateDashboardCounts();
+    }
+
+    // Create a DOM element for a flashcard
+    function createCardElement(card) {
+      const cardWrapper = document.createElement("div");
+      cardWrapper.className = "flex flex-col items-center";
+      cardWrapper.dataset.id = card.id;
+      cardWrapper.dataset.cardColor = card.color;
+      
+      // Create the flip card
+      const cardDiv = document.createElement("div");
+      cardDiv.className = "flip-card";
+      // Determine text color: if the chosen card color is white, use dark green (#145630); otherwise, white.
+      const textColor = (card.color.toLowerCase() === "#ffffff" || card.color.toLowerCase() === "white") ? "#145630" : "#ffffff";
+      cardDiv.innerHTML = `
+        <div class="flip-card-inner" tabindex="0">
+          <div class="flip-card-front" style="background-color: ${card.color};">
+            <p class="card-question" style="color: ${textColor};">${card.question}</p>
+          </div>
+          <div class="flip-card-back" style="background-color: ${card.color};">
+            <p class="card-answer" style="color: ${textColor};">${card.answer}</p>
+          </div>
+        </div>
+      `;
+      cardDiv.addEventListener("click", (e) => {
+        if (e.target.tagName.toLowerCase() === "button") return;
+        cardDiv.classList.toggle("flipped");
+      });
+      
+      // Create button container
+      const btnContainer = document.createElement("div");
+      btnContainer.className = "flex justify-center space-x-2 mt-2";
+      
+      // Based on location, create different buttons
+      if (card.location === "main") {
+        // Edit button
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "Edit";
+        editBtn.style.backgroundColor = "#e67e34";
+        editBtn.style.color = "white";
+        editBtn.className = "rounded px-2 py-1 transition-colors";
+        editBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          startEdit(card.id);
+        });
+        // Delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.style.backgroundColor = "#145630";
+        deleteBtn.style.color = "white";
+        deleteBtn.className = "rounded px-2 py-1 transition-colors";
+        deleteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteCard(card.id);
+        });
+        // Studied button
+        const studiedBtn = document.createElement("button");
+        studiedBtn.textContent = "Studied";
+        studiedBtn.style.backgroundColor = "white";
+        studiedBtn.style.color = "#145630";
+        studiedBtn.style.border = "1px solid #145630";
+        studiedBtn.className = "rounded px-2 py-1 transition-colors";
+        studiedBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          markStudied(card.id);
+        });
+        btnContainer.append(editBtn, deleteBtn, studiedBtn);
+      } else {
+        // In studied mode, show Return and Delete buttons
+        const returnBtn = document.createElement("button");
+        returnBtn.textContent = "Return";
+        returnBtn.style.backgroundColor = "#145630";
+        returnBtn.style.color = "white";
+        returnBtn.className = "rounded px-2 py-1 transition-colors";
+        returnBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          returnCard(card.id);
+        });
+        const deleteStudiedBtn = document.createElement("button");
+        deleteStudiedBtn.textContent = "Delete";
+        deleteStudiedBtn.style.backgroundColor = "#e67e34";
+        deleteStudiedBtn.style.color = "white";
+        deleteStudiedBtn.className = "rounded px-2 py-1 transition-colors";
+        deleteStudiedBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteCard(card.id);
+        });
+        btnContainer.append(returnBtn, deleteStudiedBtn);
+      }
+      
+      cardWrapper.appendChild(cardDiv);
+      cardWrapper.appendChild(btnContainer);
+      return cardWrapper;
+    }
+
+    // Update the dashboard counts based on flashcards in each location
+    function updateDashboardCounts() {
+      const deckCount = flashcards.filter(card => card.location === "main").length;
+      const studiedCount = flashcards.filter(card => card.location === "studied").length;
+      document.getElementById("deckCount").textContent = deckCount;
+      document.getElementById("studiedCount").textContent = studiedCount;
+    }
+
+    // Submit a flashcard from the form (for both create and update)
+    function submitFlashcard() {
+      const questionInput = document.getElementById("question");
+      const answerInput = document.getElementById("answer");
+      const colorInput = document.getElementById("card-color");
+      const question = questionInput.value.trim();
+      const answer = answerInput.value.trim();
+      const color = colorInput.value;
+
+      if (!question || !answer) {
+        alert("Please enter both a question and an answer.");
+        return;
+      }
+
+      if (editingCardId) {
+        // Update existing card
+        flashcards = flashcards.map(card => {
+          if (card.id === editingCardId) {
+            return { ...card, question, answer, color };
+          }
+          return card;
+        });
+        editingCardId = null;
+      } else {
+        // Create a new card
+        const newCard = {
+          id: Date.now().toString(),
+          question,
+          answer,
+          color,
+          location: "main"
+        };
+        flashcards.push(newCard);
+      }
+
+      saveToLocalStorage();
+      renderFlashcards();
+      resetForm();
+    }
+
+    // Start editing a card: populate the form with its values
+    function startEdit(id) {
+      const card = flashcards.find(card => card.id === id);
+      if (card) {
+        editingCardId = id;
+        document.getElementById("question").value = card.question;
+        document.getElementById("answer").value = card.answer;
+        document.getElementById("card-color").value = card.color;
+        document.getElementById("form-title").textContent = "Edit Flashcard";
+        document.getElementById("submitButton").textContent = "Update Flashcard";
+        document.getElementById("cancelEditBtn").classList.remove("hidden");
+      }
+    }
+
+    // Cancel edit mode
+    function cancelEdit() {
+      editingCardId = null;
+      resetForm();
+    }
+
+    // Reset the form fields and editing mode
+    function resetForm() {
+      document.getElementById("question").value = "";
+      document.getElementById("answer").value = "";
+      document.getElementById("card-color").value = "#ffffff";
+      document.getElementById("form-title").textContent = "Create a Flashcard";
+      document.getElementById("submitButton").textContent = "Add Flashcard";
+      document.getElementById("cancelEditBtn").classList.add("hidden");
+    }
+
+    // Delete a card (from either location)
+    function deleteCard(id) {
+      flashcards = flashcards.filter(card => card.id !== id);
+      saveToLocalStorage();
+      renderFlashcards();
+    }
+
+    // Mark a card as studied (change its location)
+    function markStudied(id) {
+      flashcards = flashcards.map(card => {
+        if (card.id === id) {
+          return { ...card, location: "studied" };
+        }
+        return card;
+      });
+      saveToLocalStorage();
+      renderFlashcards();
+    }
+
+    // Return a card from studied to the main deck
+    function returnCard(id) {
+      flashcards = flashcards.map(card => {
+        if (card.id === id) {
+          return { ...card, location: "main" };
+        }
+        return card;
+      });
+      saveToLocalStorage();
+      renderFlashcards();
+    }
+
+    // Toggle the studied modal display
+    function toggleStudiedModal() {
+      const modal = document.getElementById("studied-modal");
+      modal.classList.toggle("hidden");
+    }
+
+    // On page load, load flashcards from localStorage and render
+    window.addEventListener("DOMContentLoaded", () => {
+      loadFromLocalStorage();
+      renderFlashcards();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlKfeir High School</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Mori', sans-serif;
+            background: #565656;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .gallery {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .cards {
+            position: absolute;
+            width: 18rem; /* Increased width */
+            height: 24rem; /* Increased height */
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .cards li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 18rem; /* Increased width */
+            height: 24rem; /* Increased height */
+            text-align: center;
+            font-size: 2rem;
+            background-color: #575757;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 0.8rem;
+            overflow: hidden; /* Ensure the image doesn't overflow the card */
+        }
+        .cards li img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the card area */
+        }
+        .cards li .info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        .actions {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        button {
+            display: inline-block;
+            outline: none;
+            border: none;
+            padding: 8px 14px;
+            background: #414141;
+            background-image: linear-gradient(to bottom, #575757, #414141);
+            text-shadow: 0px 1px 0px #414141;
+            box-shadow: 0px 1px 0px #414141;
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 auto 10px;
+            border-radius: 4px;
+            padding: 12px 25px;
+            font-family: 'Mori', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 18px;
+        }
+        button:hover {
+            background: #e67e34;
+            background-image: linear-gradient(to bottom, #e67e34, #e67e34);
+            text-shadow: 0px 1px 0px #e67e34;
+            box-shadow: 0px 1px 0px #fefefe;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .info {
+            font-size: 15px;
+        }
+        .back-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #e5e7eb;
+  color: #374151;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #d1d5db;
+}
+    </style>
+</head>
+<body>
+ 
+    <div class="gallery">
+        <a href="index.html" class="back-button">&larr; Back</a>
+        <ul class="cards">
+            <li>
+                <img src="hala3.jpeg" alt="Hala Abou Saad">
+                <div class="info">
+                    <h3>Hala Abou Saad</h3>
+                </div>
+            </li>
+            <li>
+                <img src="tiya.jpeg" alt="Name 1">
+                <div class="info">
+                    <h3>Tiya Maddah</h3>
+                </div>
+            </li>
+            <li>
+                <img src="leya.jpeg" alt="Name 2">
+                <div class="info">
+                    <h3>Lea Abou Saad</h3>
+                </div>
+            </li>
+            <li>
+                <img src="haifa.jpeg" alt="Name 3">
+                <div class="info">
+                    <h3>Haifa Derbieh</h3>
+                </div>
+            </li>
+            <li>
+                <img src="shaymaa.jpeg" alt="Name 4">
+                <div class="info">
+                    <h3>Shaymaa Farhood</h3>
+                </div>
+            </li>
+            <li>
+                <img src="maro.jpeg" alt="Name 5">
+                <div class="info">
+                    <h3>Marianne Abou Lezz</h3>
+                </div>
+            </li>
+            <li>
+                <img src="Rola.jpeg" alt="Name 6">
+                <div class="info">
+                    <h3>Rola Amer</h3>
+                </div>
+            </li>
+            <li>
+                <img src="magui.jpeg" alt="Name 7">
+                <div class="info">
+                    <h3>Magui Anbar</h3>
+                </div>
+            </li>
+            <li>
+                <img src="Jana.jpeg" alt="Name 8">
+                <div class="info">
+                    <h3>Jana Abou Ibrahim</h3>
+                </div>
+            </li>
+            <li>
+                <img src="Mirna.jpeg" alt="Name 9">
+                <div class="info">
+                    <h3>Mirna Alaaysami</h3>
+                </div>
+            </li>
+            <li>
+                <img src="tania.jpeg" alt="Name 10">
+                <div class="info">
+                    <h3>Tania Lhalabi</h3>
+                </div>
+            </li>
+            <li>
+                <img src="nadine.jpeg" alt="Name 11">
+                <div class="info">
+                    <h3>Nadine Nawfal</h3>
+                </div>
+            </li>
+            <li>
+                <img src="sana.jpg" alt="Name 12">
+                <div class="info">
+                    <h3>Sana Baraket</h3>
+                </div>
+            </li>
+            <li>
+                <img src="Ghina.jpeg" alt="Name 13">
+                <div class="info">
+                    <h3>Ghina Abou Ibrahim</h3>
+                </div>
+            </li>
+            <li>
+                <img src="wael.jpeg" alt="Name 14">
+                <div class="info">
+                    <h3>Wael Abou Hamdan</h3>
+                </div>
+            </li>
+            <li>
+                <img src="bahaa.jpeg" alt="Name 15">
+                <div class="info">
+                    <h3>Bahaa Hamden</h3>
+                </div>
+            </li>
+            <li>
+                <img src="Saleh.jpeg" alt="Name 16">
+                <div class="info">
+                    <h3>Saleh Abou Lezz</h3>
+                </div>
+            </li>
+            <li>
+                <img src="firas.jpeg" alt="Name 20">
+                <div class="info">
+                    <h3>Firas Abou Lezz</h3>
+                </div>
+            </li>
+            <li>
+                <img src="ragad.jpeg" alt="Name 22">
+                <div class="info">
+                    <h3>Ragad Amer</h3>
+                </div>
+            </li>
+            <li>
+                <img src="baraa.jpeg" alt="Name 22">
+                <div class="info">
+                    <h3>baraa abou faoor</h3>
+                </div>
+            </li>
+            <li>
+                <img src="rayan.jpeg" alt="Name 21">
+                <div class="info">
+                    <h3>Rayan Abou Lezz</h3>
+                </div>
+            </li>
+            <li>
+                <img src="roudy.jpeg" alt="Name 18">
+                <div class="info">
+                    <h3>Rodolph Najjad</h3>
+                </div>
+            </li>
+            <li>
+                <img src="wael2.jpeg" alt="Name 22">
+                <div class="info">
+                    <h3>Wael Abou Faaor</h3>
+                </div>
+            </li>
+            <li>
+                <img src="fares.jpeg" alt="Name 22">
+                <div class="info">
+                    <h3>Fares</h3>
+                </div>
+            </li>
+            <li>
+                <img src="nashaat.jpeg" alt="Name 19">
+                <div class="info">
+                    <h3>Nashaat Abo Faaor</h3>
+                </div>
+            </li>
+            <li>
+                <img src="tamer.jpeg" alt="Name 22">
+                <div class="info">
+                    <h3>Tamer Nawfal</h3>
+                </div>
+            </li>
+
+            
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        let iteration = 0; // Tracks iterations for seamless looping
+        const spacing = 0.1, // Spacing between cards
+            snap = gsap.utils.snap(spacing), // Snaps playhead to spacing
+            cards = gsap.utils.toArray('.cards li'),
+            seamlessLoop = buildSeamlessLoop(cards, spacing),
+            scrub = gsap.to(seamlessLoop, { // Scrubs the playhead
+                totalTime: 0,
+                duration: 0.5,
+                ease: "power3",
+                paused: true
+            }),
+            trigger = ScrollTrigger.create({
+                start: 0,
+                onUpdate(self) {
+                    if (self.progress === 1 && self.direction > 0 && !self.wrapping) {
+                        wrapForward(self);
+                    } else if (self.progress < 1e-5 && self.direction < 0 && !self.wrapping) {
+                        wrapBackward(self);
+                    } else {
+                        scrub.vars.totalTime = snap((iteration + self.progress) * seamlessLoop.duration());
+                        scrub.invalidate().restart(); // Improves performance
+                        self.wrapping = false;
+                    }
+                },
+                end: "+=3000",
+                pin: ".gallery"
+            });
+
+        function wrapForward(trigger) { // Loops forward
+            iteration++;
+            trigger.wrapping = true;
+            trigger.scroll(trigger.start + 1);
+        }
+
+        function wrapBackward(trigger) { // Loops backward
+            iteration--;
+            if (iteration < 0) {
+                iteration = 9;
+                seamlessLoop.totalTime(seamlessLoop.totalTime() + seamlessLoop.duration() * 10);
+                scrub.pause();
+            }
+            trigger.wrapping = true;
+            trigger.scroll(trigger.end - 1);
+        }
+
+        function scrubTo(totalTime) { // Moves scroll position based on totalTime
+            let progress = (totalTime - seamlessLoop.duration() * iteration) / seamlessLoop.duration();
+            if (progress > 1) {
+                wrapForward(trigger);
+            } else if (progress < 0) {
+                wrapBackward(trigger);
+            } else {
+                trigger.scroll(trigger.start + progress * (trigger.end - trigger.start));
+            }
+        }
+
+        document.querySelector(".next").addEventListener("click", () => scrubTo(scrub.vars.totalTime + spacing));
+        document.querySelector(".prev").addEventListener("click", () => scrubTo(scrub.vars.totalTime - spacing));
+
+        function buildSeamlessLoop(items, spacing) { // Builds the seamless loop animation
+            let overlap = Math.ceil(1 / spacing), // Extra animations for seamless looping
+                startTime = items.length * spacing + 0.5, // Start time for the loop
+                loopTime = (items.length + overlap) * spacing + 1, // End time for the loop
+                rawSequence = gsap.timeline({ paused: true }), // Timeline for animations
+                seamlessLoop = gsap.timeline({ // Timeline for scrubbing
+                    paused: true,
+                    repeat: -1,
+                    onRepeat() {
+                        this._time === this._dur && (this._tTime += this._dur - 0.01);
+                    }
+                }),
+                l = items.length + overlap * 2,
+                time = 0,
+                i, index, item;
+
+            gsap.set(items, { xPercent: 400, opacity: 0, scale: 0 }); // Initial state
+
+            for (i = 0; i < l; i++) { // Create staggered animations
+                index = i % items.length;
+                item = items[index];
+                time = i * spacing;
+                rawSequence.fromTo(item, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, zIndex: 100, duration: 0.5, yoyo: true, repeat: 1, ease: "power1.in", immediateRender: false }, time)
+                    .fromTo(item, { xPercent: 400 }, { xPercent: -400, duration: 1, ease: "none", immediateRender: false }, time);
+                i <= items.length && seamlessLoop.add("label" + i, time); // Add labels
+            }
+
+            rawSequence.time(startTime);
+            seamlessLoop.to(rawSequence, {
+                time: loopTime,
+                duration: loopTime - startTime,
+                ease: "none"
+            }).fromTo(rawSequence, { time: overlap * spacing + 1 }, {
+                time: startTime,
+                duration: startTime - (overlap * spacing + 1),
+                immediateRender: false,
+                ease: "none"
+            });
+            return seamlessLoop;
+        }
+    </script>
+</body>
+</html>

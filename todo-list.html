@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>AlKfeir High School</title>
+	<link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <style>
+:root {
+	--primary: #e67e34;
+	--business: #145630;
+	--personal: var(--primary);
+	--light: #EEE;
+	--grey: #888;
+	--dark: #145630;
+	--danger: #145630;
+
+	--shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+	--business-glow: 0px 0px 4px rgb(20, 86, 48, 0.75);
+	--personal-glow: 0px 0px 4px rgb(230, 126, 52,0.75);
+}
+/* End of Variables */
+
+/* Resets */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'montserrat', sans-serif;
+}
+
+.back-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #e5e7eb;
+  color: #374151;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #d1d5db;
+}
+
+
+input:not([type="radio"]):not([type="checkbox"]), button {
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
+	cursor: initial;
+}
+/* End of Resets */
+
+body {
+	background: var(--light);
+	color: var(--dark);
+    background-color: #F5F1E3;
+}
+
+section {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
+}
+
+h3 {
+	color: var(--dark);
+	font-size: 1rem;
+	font-weight: 400;
+	margin-bottom: 0.5rem;
+}
+
+h4 {
+	color: var(--grey);
+	font-size: 0.875rem;
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+}
+
+.greeting .title {
+	display: flex;
+}
+
+.greeting .title input {
+	margin-left: 0.5rem;
+	flex: 1 1 0%;
+	min-width: 0;
+}
+
+.greeting .title, 
+.greeting .title input {
+	color: var(--dark);
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.create-todo input[type="text"] {
+	display: block;
+	width: 100%;
+	font-size: 1.125rem;
+	padding: 1rem 1.5rem;
+	color: var(--dark);
+	background-color: #FFF;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+	margin-bottom: 1.5rem;
+}
+
+.create-todo .options {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.create-todo .options label {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: #FFF;
+	padding: 1.5rem;
+	box-shadow: var(--shadow);
+	border-radius: 0.5rem;
+	cursor: pointer;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+	display: none;
+}
+
+.bubble {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 999px;
+	border: 2px solid var(--business);
+	box-shadow: var(--business-glow);
+}
+
+.bubble.personal {
+	border-color: var(--personal);
+	box-shadow: var(--personal-glow);
+}
+
+.bubble::after {
+	content: '';
+	display: block;
+	opacity: 0;
+	width: 0px;
+	height: 0px;
+	background-color: var(--business);
+	box-shadow: var(--business-glow);
+	border-radius: 999px;
+	transition: 0.2s ease-in-out;
+}
+
+.bubble.personal::after {
+	background-color: var(--personal);
+	box-shadow: var(--personal-glow);
+}
+
+input:checked ~ .bubble::after {
+	width: 10px;
+	height: 10px;
+	opacity: 1;
+}
+
+.create-todo .options label div {
+	color: var(--dark);
+	font-size: 1.125rem;
+	margin-top: 1rem;
+}
+
+.create-todo input[type="submit"] {
+	display: block;
+	width: 100%;
+	font-size: 1.125rem;
+	padding: 1rem 1.5rem;
+	color: #FFF;
+	font-weight: 700;
+	text-transform: uppercase;
+	background-color: var(--primary);
+	box-shadow: var(--personal-glow);
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: 0.2s ease-out;
+}
+
+.create-todo input[type="submit"]:hover {
+	opacity: 0.75;
+}
+
+.todo-list .list {
+	margin: 1rem 0;
+}
+
+.todo-list .todo-item {
+	display: flex;
+	align-items: center;
+	background-color: #FFF;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	box-shadow: var(--shadow);
+	margin-bottom: 1rem;
+}
+
+.todo-item label {
+	display: block;
+	margin-right: 1rem;
+	cursor: pointer;
+}
+
+.todo-item .todo-content {
+	flex: 1 1 0%;
+}
+
+.todo-item .todo-content input {
+	color: var(--dark);
+	font-size: 1.125rem;
+}
+
+.todo-item .actions {
+	display: flex;
+	align-items: center;
+}
+
+.todo-item .actions button {
+	display: block;
+	padding: 0.5rem;
+	border-radius: 0.25rem;
+	color: #FFF;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+}
+
+.todo-item .actions button:hover {
+	opacity: 0.75;
+}
+
+.todo-item .actions .edit {
+	margin-right: 0.5rem;
+	background-color: var(--primary);
+}
+
+.todo-item .actions .delete {
+	background-color: var(--danger);
+}
+
+.todo-item.done .todo-content input {
+	text-decoration: line-through;
+	color: var(--grey);
+}
+    </style>
+	<!-- App Wrapper -->
+
+	<main class="app">
+        <a href="forStudents.html" class="back-button">&larr; Back</a>
+        <br><br>
+		<!-- Greeting -->
+		<section class="greeting">
+			<h2 class="title">
+				What's up, <input type="text" id="name" placeholder="Name here" />
+			</h2>
+		</section>
+		<!-- End of Greeting -->
+		
+		<!-- New Todo -->
+		<section class="create-todo">
+			<h3>CREATE A TODO</h3>
+			<form id="new-todo-form">
+				<h4>What's on your todo?</h4>
+				<input 
+					type="text" 
+					placeholder="e.g. Study Mathematics"
+					name="content"
+					id="content" />
+				
+				<h4>Pick a category</h4>
+				<div class="options">
+					<label>
+						<input type="radio" name="category" id="category1" value="business" /> 
+						<span class="bubble business"></span>
+						<div>Delayed</div>
+					</label>
+					<label>
+						<input type="radio" name="category" id="category2" value="personal" />
+						<span class="bubble personal"></span>
+						<div>Urgent</div>
+					</label>
+				</div>
+
+				<input type="submit" value="Add todo" />
+			</form>
+		</section>
+		<!-- End of New Todo -->
+
+		<!-- Todo List -->
+		<section class="todo-list">
+			<h3>TODO LIST</h3>
+			<div class="list" id="todo-list"></div>
+		</section>
+		<!-- End of Todo List -->
+
+	</main>
+	<!-- End of App Wrapper -->
+
+	<!-- JS Import -->
+   
+	<script>
+        window.addEventListener('load', () => {  // Wait for the page to fully load before running the function
+    const name = localStorage.getItem('username') || "";  // Retrieve the 'username' from localStorage. If not found, default to an empty string.
+    const nameInput = document.querySelector("#name");  // Get the input element with the ID 'name' from the DOM
+    nameInput.value = name;  // Set the value of the input field to the 'username' retrieved from localStorage
+
+    nameInput.addEventListener('change', (e) => {  // Add an event listener to the 'name' input field to listen for any changes (user input)
+        localStorage.setItem('username', e.target.value);  // Save the updated value entered by the user in localStorage
+    });
+
+    todos = JSON.parse(localStorage.getItem('todos')) || [];  // Retrieve the 'todos' array from localStorage. If not found, default to an empty array.
+    const newtodoform = document.querySelector('#new-todo-form');  // Get the form element with the ID 'new-todo-form'
+    
+    newtodoform.addEventListener('submit', (e) => {  // Add an event listener to the form that listens for the 'submit' event
+        e.preventDefault();  // Prevent the default form submission behavior (page reload)
+        const task = {  // Create a new task object with the task details
+            content: e.target.elements.content.value,  // Get the value entered in the 'content' input field
+            category: e.target.elements.category.value,  // Get the value selected in the 'category' dropdown field
+            done: false,  // Initialize the 'done' status of the task as 'false'
+            createdat: new Date().getTime()  // Store the creation timestamp of the task
+        };
+        todos.push(task);  // Add the newly created task to the 'todos' array
+        localStorage.setItem('todos', JSON.stringify(todos));  // Save the updated 'todos' array back to localStorage
+        e.target.reset();  // Reset the form inputs after submission
+        console.log(todos);  // Log the updated 'todos' array to the console
+        DisplayTodos();  // Call the DisplayTodos function to update the displayed tasks
+    });
+
+    DisplayTodos();  // Call the DisplayTodos function to display the current tasks when the page loads
+});
+
+// Function to display the tasks in the 'todos' array
+function DisplayTodos() {
+    const todoList = document.querySelector('#todo-list');  // Get the element with the ID 'todo-list' where tasks will be displayed
+    todoList.innerHTML = "";  // Clear any existing content in the todo list
+
+    todos.forEach(task => {  // Iterate over each task in the 'todos' array
+        const todoItem = document.createElement('div');  // Create a new div element for each task
+        const label = document.createElement('label');  // Create a label element for the checkbox
+        const input = document.createElement('input');  // Create an input element (checkbox) for marking the task as done
+        const span = document.createElement('span');  // Create a span element for the category label (bubble)
+        const content = document.createElement('div');  // Create a div element for the task content
+        const actions = document.createElement('div');  // Create a div element to contain the action buttons (edit, delete)
+        const edit = document.createElement('button');  // Create an edit button
+        const deleteButton = document.createElement('button');  // Create a delete button
+        
+        todoItem.classList.add('todo-item');  // Add the 'todo-item' class to the todoItem div
+        input.type = 'checkbox';  // Set the input type to 'checkbox'
+        input.checked = task.done;  // Check the checkbox if the task is marked as 'done'
+        span.classList.add('bubble');  // Add the 'bubble' class to the span element to style it as a category label
+
+        // Conditional to check the category of the task (personal or business)
+        if (task.category == 'personal') {
+            span.classList.add('personal');  // Add the 'personal' class for personal tasks
+        } else {
+            span.classList.add('business');  // Add the 'business' class for business tasks
+        }
+
+        content.classList.add('todo-content');  // Add the 'todo-content' class to the content div
+        actions.classList.add('actions');  // Add the 'actions' class to the actions div (for edit and delete buttons)
+        edit.classList.add('edit');  // Add the 'edit' class to the edit button
+        deleteButton.classList.add('delete');  // Add the 'delete' class to the delete button
+        
+        content.innerHTML = `<input type="text" value="${task.content}" readonly>`;  // Set the content input value to the task's content (read-only)
+        edit.innerHTML = "edit";  // Set the text for the edit button
+        deleteButton.innerHTML = "delete";  // Set the text for the delete button
+        
+        // Append all elements to form the task item structure
+        label.appendChild(input);  // Append the checkbox input to the label
+        label.appendChild(span);  // Append the category label (span) to the label
+        actions.appendChild(edit);  // Append the edit button to the actions div
+        actions.appendChild(deleteButton);  // Append the delete button to the actions div
+        todoItem.appendChild(label);  // Append the label (checkbox and category) to the todoItem div
+        todoItem.appendChild(content);  // Append the content (task text) to the todoItem div
+        todoItem.appendChild(actions);  // Append the actions (edit and delete buttons) to the todoItem div
+        todoList.appendChild(todoItem);  // Append the todoItem to the todoList container in the DOM
+
+        if (task.done) {  // If the task is marked as 'done', apply the 'done' class to the todoItem
+            todoItem.classList.add('done');
+        }
+        input.addEventListener('change', (e)=>{
+            task.done = e.target.checked;
+            localStorage.setItem('todos', JSON.stringify(todos));
+            if(task.done){
+                todoItem.classList.add('done');
+            }
+            else{
+                todoItem.classList.remove('done');
+            }
+
+            DisplayTodos();
+
+        });
+
+        deleteButton.addEventListener('click', (e) =>{
+            todos = todos.filter(T => T != task);
+            localStorage.setItem('todos', JSON.stringify(todos));
+
+            DisplayTodos();
+        })
+
+        edit.addEventListener('click',(e) => {
+            const input = content.querySelector('input');
+            input.removeAttribute('readonly');
+            input.focus();
+            input.addEventListener('blur',(e) =>{
+                input.setAttribute('readonly',true);
+                task.content = e.target.value;
+                localStorage.setItem('todos', JSON.stringify(todos));
+                DisplayTodos();
+            });
+
+          
+        })
+    });
+}
+
+
+    </script>
+</body>
+</html>

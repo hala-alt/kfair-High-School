@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <title>Principal's Page</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="falkon.png">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            margin: 20px auto;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #145630;
+            font-weight: 600;
+        }
+
+        label {
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            text-align: left;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="number"],
+        input[type="password"] {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: border-color 0.3s ease;
+            display: block;
+        }
+
+        input:focus {
+            border-color: #e67e34;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #e67e34;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #d46a1f;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        #content {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="margin-bottom:70%;">
+        <!-- Password Prompt -->
+        <div id="password-prompt">
+            <h1>Principal's Access</h1>
+            <label for="password">Enter Password:</label>
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="checkPassword()">Submit</button>
+            <p class="footer">Only authorized personnel can access this page.</p>
+        </div>
+
+        <!-- Protected Content -->
+        <div id="content">
+            <h1>Top 3 Students</h1>
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
+
+            <h2>1st Place</h2>
+            <label for="name1">Name:</label>
+            <input type="text" id="name1" placeholder="Student's Name" required>
+            <label for="score1">Score:</label>
+            <input type="number" id="score1" placeholder="Score" required>
+
+            <h2>2nd Place</h2>
+            <label for="name2">Name:</label>
+            <input type="text" id="name2" placeholder="Student's Name" required>
+            <label for="score2">Score:</label>
+            <input type="number" id="score2" placeholder="Score" required>
+
+            <h2>3rd Place</h2>
+            <label for="name3">Name:</label>
+            <input type="text" id="name3" placeholder="Student's Name" required>
+            <label for="score3">Score:</label>
+            <input type="number" id="score3" placeholder="Score" required>
+
+            <button onclick="saveData()">Save Data</button>
+            <p class="footer">The data will be displayed on the congratulations page.</p>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password === 'blackholes') {
+                document.getElementById('content').style.display = 'block';
+                document.getElementById('password-prompt').style.display = 'none';
+            } else {
+                alert('Incorrect password!');
+            }
+        }
+
+        function saveData() {
+            const date = document.getElementById('date').value;
+            const name1 = document.getElementById('name1').value.trim();
+            const score1 = document.getElementById('score1').value.trim();
+            const name2 = document.getElementById('name2').value.trim();
+            const score2 = document.getElementById('score2').value.trim();
+            const name3 = document.getElementById('name3').value.trim();
+            const score3 = document.getElementById('score3').value.trim();
+
+            if (!date || !name1 || !score1 || !name2 || !score2 || !name3 || !score3) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            if (isNaN(score1) || isNaN(score2) || isNaN(score3)) {
+                alert('Scores must be numbers.');
+                return;
+            }
+
+            const data = {
+                date,
+                students: [
+                    { name: name1, score: score1, rank: 1 },
+                    { name: name2, score: score2, rank: 2 },
+                    { name: name3, score: score3, rank: 3 },
+                ],
+            };
+
+            localStorage.setItem('topStudents', JSON.stringify(data));
+            alert('Data saved successfully!');
+            document.querySelectorAll('input').forEach(input => input.value = '');
+        }
+    </script>
+
+
+</body>
+</html>

@@ -66,6 +66,7 @@
     .container {
       max-width: 1200px;
       margin: 40px auto;
+      padding: 0 15px;
     }
 
     .tool-card {
@@ -77,10 +78,9 @@
       text-align: center;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 200px; /* Fixed height for equal size */
-      width: 350px; /* Minimum width for equal sizing */
+      justify-content: space-between;
+      height: 100%; /* Take full height of grid cell */
+      min-height: 200px; /* Minimum height */
     }
 
     .tool-card:hover {
@@ -104,43 +104,37 @@
     .tool-card p {
       font-size: 14px;
       color: #777;
+      margin-bottom: 0;
     }
 
-    /* Grid layout for the tools (3 tools per line) */
+    /* Grid layout for the tools */
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
-      justify-items: center; /* Center the cards horizontally */
+      width: 100%;
     }
 
     /* Make it responsive */
     @media (max-width: 768px) {
       .tools-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns per row on smaller screens */
-      }
-      .tool-card {
-        width: 300px; /* Adjust width for smaller screens */
-        height: 180px; /* Adjust height for smaller screens */
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       }
     }
 
     @media (max-width: 480px) {
       .tools-grid {
-        grid-template-columns: 1fr; /* 1 column per row on very small screens */
+        grid-template-columns: 1fr;
       }
       .tool-card {
-        width: 100%; /* Full width for very small screens */
-        height: auto; /* Auto height for very small screens */
-        padding: 15px; /* Adjust padding for very small screens */
+        min-height: 180px;
       }
     }
 
     a {
       text-decoration: none;
     }
-
-           /* Loader Styles - Fixed Full Screen */
+    /* Loader Styles - Fixed Full Screen */
 .loader {
   position: fixed;
   top: 0;
@@ -256,8 +250,7 @@
     </div>
   </div>
 </div>
-
-  <script>
+<script>
   // Show loader when page starts loading
   document.addEventListener('DOMContentLoaded', function() {
     const loader = document.getElementById('global-loader');
@@ -346,12 +339,12 @@
     <h1 class="text-center mb-4" style="color: #e67e34; font-weight: bolder;">Student Tools</h1>
     <div class="tools-grid">
 
-      <!-- Productivity Tool -->
-      <a href="forest.html">
+      <!-- Complex Number Calculator -->
+      <a href="complex-calculator.html">
         <div class="tool-card">
-          <i class="fas fa-city"></i>
-          <h2>Productivity</h2>
-          <p>Build a city and get your things done today</p>
+          <i class="fas fa-square-root-alt"></i>
+          <h2>Complex Number Calculator</h2>
+          <p>Perform calculations with complex numbers and visualize them</p>
         </div>
       </a>
 

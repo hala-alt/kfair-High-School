@@ -167,6 +167,23 @@
       height: 2px;
       background-color: var(--secondary);
     }
+     .back-button {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background-color: #e5e7eb;
+      color: #374151;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 4px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .back-button:hover {
+      background-color: #d1d5db;
+    }
   </style>
 </head>
 <body>
@@ -179,7 +196,7 @@
       </div>
     </div>
   </header>
-
+ <a href="forStudents.html" class="back-button">&larr; Back</a>
   <div class="container">
     <div class="tabs">
       <button class="tab-button active" data-tab="operations">Complex Number Operations</button>

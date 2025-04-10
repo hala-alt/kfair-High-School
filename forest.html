@@ -25,6 +25,7 @@
       background-color: var(--primary);
       padding: 1rem;
       color: var(--light);
+      position: relative;
     }
     
     .navbar {
@@ -88,6 +89,7 @@
       margin-bottom: 1rem;
       border: 1px solid #ddd;
       border-radius: 4px;
+      box-sizing: border-box;
     }
     
     button {
@@ -99,6 +101,8 @@
       cursor: pointer;
       font-size: 1rem;
       transition: background-color 0.3s;
+      width: 100%;
+      margin-bottom: 1rem;
     }
     
     button:hover {
@@ -142,6 +146,8 @@
       display: flex;
       margin-bottom: 1rem;
       border-bottom: 1px solid #ddd;
+      overflow-x: auto;
+      white-space: nowrap;
     }
     
     .tab-button {
@@ -167,9 +173,11 @@
       height: 2px;
       background-color: var(--secondary);
     }
-     .back-button {
+    
+    /* Back button styles */
+    .back-button {
       position: absolute;
-      margin-top: 5%;
+      margin-top: 30%;
       top: 16px;
       left: 16px;
       background-color: #e5e7eb;
@@ -180,24 +188,83 @@
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
       text-decoration: none;
       transition: background-color 0.2s ease-in-out;
+      z-index: 10;
     }
-
+    
     .back-button:hover {
       background-color: #d1d5db;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .nav-links {
+        margin-top: 1rem;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      
+      .nav-links a {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .brand {
+        margin-bottom: 0.5rem;
+      }
+      
+      #complexCanvas {
+        height: 300px;
+      }
+      
+      .section {
+        padding: 1rem;
+      }
+      
+      .back-button {
+        top: 8px;
+        left: 8px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .tabs {
+        flex-direction: column;
+        white-space: normal;
+      }
+      
+      .tab-button {
+        text-align: left;
+        padding: 0.5rem 1rem;
+      }
+      
+      .result {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+      
+      h1, h2, h3 {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>
+    <a href="forStudents.html" class="back-button">&larr; Back</a>
     <div class="navbar">
-      <div class="brand">Discover Complex Numbers</div>
+      <div class="brand">Discover Complex Number</div>
       <div class="nav-links">
         <a href="#" class="nav-link" data-tab="operations">Operations</a>
         <a href="#" class="nav-link" data-tab="visualization">Visualization</a>
       </div>
     </div>
   </header>
- <a href="forStudents.html" class="back-button">&larr; Back</a>
+
   <div class="container">
     <div class="tabs">
       <button class="tab-button active" data-tab="operations">Complex Number Operations</button>

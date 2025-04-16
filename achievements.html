@@ -549,153 +549,327 @@ musicButton.addEventListener('click', () => {
 });
     </script>
     <br><br><br>
-    <style>
-        /* General Reset */
-        .hs-footer-reset {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          width:100%
-        }
-    
-        /* Footer Container */
-        .hs-footer-container {
-          background-color: #145630;
-          color: white;
-          padding: 40px 20px;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: flex-start;
-          font-family: Arial, sans-serif;
-        }
-    
-        /* Footer Sections */
-        .hs-footer-section {
-          flex: 1;
-          min-width: 200px;
-          margin: 10px 20px;
-        }
-    
-        .hs-footer-section h3 {
-          color: #000;
-          margin-bottom: 15px;
-          font-size: 18px;
-        }
-    
-        .hs-footer-section ul {
-          list-style: none;
-          padding: 0;
-        }
-    
-        .hs-footer-section ul li {
-          margin-bottom: 10px;
-        }
-    
-        .hs-footer-section ul li a {
-          color: white;
-          text-decoration: none;
-          transition: color 0.3s ease;
-        }
-    
-        .hs-footer-section ul li a:hover {
-          color: #000;
-        }
-    
-        /* School Logo */
-        .hs-footer-logo {
-          max-width: 150px;
-          margin-bottom: 15px;
-        }
-    
-        /* Social Icons - Vertical Layout */
-        .hs-footer-social-icons {
-          display: flex;
-          flex-direction: column;
-          gap: 15px; /* Space between icons */
-        }
-    
-        .hs-footer-social-icons a {
-          display: inline-block;
-          color: white;
-          font-size: 28px; /* Enlarged icons */
-    
-          transition: all 0.3s ease;
-        }
-    
-        /* Creative Hover Animation */
-        .hs-footer-social-icons a:hover {
-          color: #000; /* Change color on hover */
-          opacity: 0.9;
-        }
-    
-        /* Copyright */
-        .hs-footer-copyright {
-          text-align: center;
-          width: 100%;
-          margin-top: 20px;
-          font-size: 14px;
-          color: #000;
-        }
-    
-        /* Responsive Design */
-        @media (max-width: 768px) {
-          .hs-footer-container {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-          }
-    
-          .hs-footer-section {
-            margin: 10px 0;
-          }
-        }
-      </style>
-    
-    <div class="hs-footer-reset">
-    
-        <!-- Footer -->
-        <footer class="hs-footer-container">
-          <!-- School Logo and Name -->
-          <div class="hs-footer-section">
-            <img src="school logo.png" alt="High School Logo" class="hs-footer-logo">
-            <h3 class="hs-footer-school-name">AlKfeir High School</h3>
-          </div>
-      
-          <!-- Quick Links -->
-          <div class="hs-footer-section">
-            <h3 class="hs-footer-quick-links-title">Quick Links</h3>
-            <ul class="hs-footer-quick-links">
-              <li><a href="index.html" class="hs-footer-link">Home</a></li>
-              <li><a href="topgrades.html" class="hs-footer-link">Top Grades</a></li>
-              <li><a href="achievements.html" class="hs-footer-link">Achievements</a></li>
-              <li><a href="library.html" class="hs-footer-link">Library</a></li>
-              <li><a href="chatbot.html" class="hs-footer-link">FAQs</a></li>
-            </ul>
-          </div>
-      
-          <!-- Social Media Links -->
-          <div class="hs-footer-section">
-            <h3 class="hs-footer-social-title">Contact</h3>
-            <div class="hs-footer-social-icons">
-              <a href="mailto:alkfierss@gmail.com" aria-label="Email" class="hs-footer-social-link">
-                <i class="fas fa-envelope"></i>
-              </a>
-              <a href="https://wa.me/03759089" aria-label="WhatsApp" class="hs-footer-social-link">
-                <i class="fab fa-whatsapp"></i>
-              </a>
-              <a href="https://www.facebook.com/profile.php?id=100068916519551&mibextid=ZbWKwL" aria-label="Facebook" class="hs-footer-social-link">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-            </div>
-          </div>
-      
-          <!-- Copyright -->
-          <div class="hs-footer-copyright">
-            &copy; 2025 developed by Hala Abou Saad. All rights reserved.
-          </div>
-        </footer>
+  <style>
+     /* Modern University Footer Styles */
+:root {
+  --primary-color: #145630; /* Dark Green */
+  --secondary-color: #e67e34; /* Orange */
+  --text-light: #ffffff;
+  --text-dark: #333333;
+  --bg-light: #f8f9fa;
+  --bg-dark: #2c3e50;
+}
+
+.university-footer {
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  padding: 3rem 1rem 0;
+  line-height: 1.6;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+/* Brand Section */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.university-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo-img {
+  width: 60px;
+  height: 60px;
+  margin-right: 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+
+}
+
+.university-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.university-motto {
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.social-media {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-media a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.social-media a:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-3px);
+}
+
+/* Links Section */
+.footer-links {
+  padding: 0 1rem;
+}
+
+.footer-heading {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background-color: var(--secondary-color);
+}
+
+.footer-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-nav li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-nav a {
+  color: var(--text-light);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.footer-nav a:hover {
+  color: var(--secondary-color);
+  padding-left: 8px;
+}
+
+.footer-nav a::before {
+  content: '→';
+  position: absolute;
+  left: -15px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: var(--secondary-color);
+}
+
+.footer-nav a:hover::before {
+  left: -10px;
+  opacity: 1;
+}
+
+/* Contact Section */
+.footer-contact {
+  padding: 0 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.contact-item i {
+  color: var(--secondary-color);
+  margin-right: 1rem;
+  margin-top: 3px;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1.5rem 0;
+}
+
+.footer-legal {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.copyright {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.legal-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.legal-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.legal-links a:hover {
+  color: var(--secondary-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  
+  .footer-links, .footer-contact {
+    padding: 0;
+  }
+  
+  .footer-legal {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .legal-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* Dynamic Year */
+#year {
+  display: inline-block;
+}
+/* Contact Links Styling */
+.contact-link {
+  display: flex;
+  align-items: center;
+  color: var(--text-light);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--secondary-color);
+}
+
+.contact-link i {
+  margin-right: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover i {
+  transform: scale(1.1);
+}
+
+/* Format phone number for better readability */
+@media (max-width: 768px) {
+  .contact-link span {
+    word-break: break-all;
+  }
+}
+    </style>
+  
+  <footer class="university-footer">
+    <div class="footer-container">
+      <!-- University Brand Section -->
+      <div class="footer-brand">
+        <div class="university-logo">
+          <img src="school logo.png" alt="University Logo" class="logo-img">
+          <div class="university-name">Al Kfeir Official High School</div>
         </div>
+        <p class="university-motto">
+          Pursuing Excellence in Education, Research and Innovation
+        </p>
+      </div>
+  
+      <!-- Quick Links Section -->
+      <div class="footer-links">
+        <h3 class="footer-heading">Quick Links</h3>
+        <ul class="footer-nav">
+          <li><a href="forStudents.html">For Students</a></li>
+          <li><a href="topgrades.html">Top Grades</a></li>
+          <li><a href="memories.html">Memories</a></li>
+        </ul>
+      </div>
+  
+      <!-- Resources Section -->
+      <div class="footer-links">
+        <h3 class="footer-heading">Resources</h3>
+        <ul class="footer-nav">
+          <li><a href="library.html">Library</a></li>
+          <li><a href="achievements.html">Achievements</a></li>
+          <li><a href="chatbot.html">FAQs</a></li>
+        </ul>
+      </div>
+  
+      <!-- Contact Section -->
+      <div class="footer-contact">
+        <h3 class="footer-heading">Contact Us</h3>
+        <address>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Alkfeir, Hasbaya district</span>
+          </div>
+          <div class="contact-item">
+            <a href="tel:+96103759089" class="contact-link" aria-label="Call us">
+              <i class="fas fa-phone-alt"></i>
+              <span>+961 03 759 089</span>
+            </a>
+          </div>
+          <div class="contact-item">
+            <a href="mailto:alkfierss@gmail.com?subject=Inquiry from University Website" class="contact-link" aria-label="Email us">
+              <i class="fas fa-envelope"></i>
+              <span>alkfierss@gmail.com</span>
+            </a>
+          </div>
+        </address>
+      </div>
+    </div>
+  
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <div class="copyright">&copy; <span id="year"></span> Alkfeir Public High School. Developed by Hala Abou Saad. All rights reserved.</div>
+        <div class="legal-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
